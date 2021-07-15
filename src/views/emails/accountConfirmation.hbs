@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corfirmação de conta</title>
+    <style>
+      p: {
+        font-size: 30px;
+      }
+      a: {
+        border-radius: 10px;
+        height: 50px;
+        width: 100px
+      }
+    </style>
+  </head>
+  <body>
+    <p>Olá {{name}}! Ficamos muito felizes pela sua inscrição</p>
+    <p>Agora, precisamos apenas que confirme a sua inscrição clicando no botão abaixo.</p>
+    <a href="{{link}}?user_id={{user_id}}">Confirme sua conta</a>
+  </body>
+</html>
