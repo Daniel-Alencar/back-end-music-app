@@ -25,17 +25,12 @@ class SendMailService {
 
   }
 
-  async execute(to: string, subject: string, body: string) {
+  async execute(to: string, subject: string, variables: object, path: string) {
     
-    const npsPath = resolve(__dirname, "..", "..", "views", "emails", "accountConfirmation.hbs");
-    const templateFileContent = fs.readFileSync(npsPath).toString("utf8");
+    const templateFileContent = fs.readFileSync(path).toString("utf8");
 
     const mailTemplateParse = Handlebars.compile(templateFileContent);
-    const html = mailTemplateParse({
-      name: to,
-      link: "link",
-      user_id: "user_id",
-    });
+    const html = mailTemplateParse(variables);
 
     const message = await this.client.sendMail({
       to: to,

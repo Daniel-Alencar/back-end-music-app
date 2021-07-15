@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { User } from '../../models/User';
+import { User } from '../models/User';
 
-import SendMailService from '../../services/emails/SendMailService';
+import SendMailService from '../services/emails/SendMailService';
+
+import { resolve } from 'path';
 
 class UserController {
   async create(request: Request, response: Response) {
@@ -26,7 +28,12 @@ class UserController {
     await usersRepository.save(user);
 
     // Envio de emails de confirmação
-    await SendMailService.execute(email, "Confirmação de conta", "Confirme sua conta");
+    const npsPath = resolve(__dirname, "..", "views", "emails", "accountConfirmation.hbs");
+    await SendMailService.execute(email, "Confirmação de conta", {
+      name: name,
+      user_id: user.id,
+      link: process.env.URL_MAIL
+    }, npsPath);
 
     return response.status(201).json(user);
   }
